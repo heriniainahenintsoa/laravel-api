@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
+use App\Http\Middleware\DelayResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
