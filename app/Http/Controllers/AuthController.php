@@ -25,13 +25,18 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $fields = $request->validate([
-            "email" => "exists:users|email|required",
+            "email" => "email|required",
             "password" => "required|min:8"
         ]);
         $user = User::where('email', $fields['email'])->first();
 
         if (!$user || !Hash::check($fields['password'], $user->password)) {
-            return ['message' => "Bad credentials"];
+            return response([
+                'errors' => [
+                    "email" => ["Bad credentials"],
+                    "password" => ["Bad credentials"],
+                ]
+            ], 401);
         }
 
         $token = $user->createToken($user->name);
